@@ -7,3 +7,5 @@ Repositorio de trabajos prácticos de la materia [Organización del computador (
 - [TP2](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/tp2): Bomblab
 
 Fuente: labs parte de los [Lab Assignments](http://csapp.cs.cmu.edu/3e/labs.html) asociados al libro: Computer Systems: A Programmer’s Perspective.
+
+- [TP3](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/assembly): Assembly. Implementacion cola
