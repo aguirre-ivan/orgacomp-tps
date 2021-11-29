@@ -20,6 +20,6 @@ Ante cualquier trabajo práctico que suponga escribir código assembly, existe l
 
 Solo serán aceptadas las entregas que incluyan, en el directorio assembly, un archivo llamado ORIGEN.txt con la siguiente declaración:
 
-`Todo el código propuesto como solución al trabajo es autoría de los
+```Todo el código propuesto como solución al trabajo es autoría de los
 integrantes, y ha sido escrito sin leer código assembly generado
-automáticamente ni fuentes de terceros.`
+automáticamente ni fuentes de terceros.```
