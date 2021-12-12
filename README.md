@@ -8,4 +8,5 @@ Repositorio de trabajos prácticos de la materia [Organización del computador (
 
 Fuente: labs parte de los [Lab Assignments](http://csapp.cs.cmu.edu/3e/labs.html) asociados al libro: Computer Systems: A Programmer’s Perspective.
 
-- [TP3](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/assembly): Assembly. Implementacion cola
+- [TP3](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/assembly): Assembly. Implementacion de cola
+- [TP4](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/tp4): Simulador de caché
