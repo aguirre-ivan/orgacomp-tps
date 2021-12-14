@@ -84,7 +84,6 @@ La interfaz del programa en la línea de comandos es:
 
 ```
 $ ./cachesim tracefile.xex C E S [ -v n m ]
-
 ```
 Los cuatro primeros argumentos son:
 1. el archivo de traza a simular
@@ -230,8 +229,6 @@ Sea un acceso a la dirección M, cuyo set (cache index) resulta ser i; dicho set
 
 ### Ejemplo
 
-Ejemplo
-
 Dado el archivo de traza [adpcm.xex](https://github.com/aguirre-ivan/orgacomp-tps/blob/main/tp4/adpcm.xex), se ofrecen muestras de la salida en las siguientes configuraciones:
 
 - 2KiB, 2-way, 64 sets:
@@ -239,11 +236,11 @@ Dado el archivo de traza [adpcm.xex](https://github.com/aguirre-ivan/orgacomp-tp
 ```
 $ ./cachesim adpcm.xex 2048 2 64 -v 0 15000
 ```
-[Salida esperada: adpcm_2048-2-64.txt](https://github.com/aguirre-ivan/orgacomp-tps/blob/main/tp4/adpcm_2048-2-64.txt)
+Salida esperada: [adpcm_2048-2-64.txt](https://github.com/aguirre-ivan/orgacomp-tps/blob/main/tp4/adpcm_2048-2-64.txt)
 
 - 4KiB, direct-mapped, 256 sets:
 
 ```
 $ ./cachesim adpcm.xex 4096 1 256 -v 0 10000
 ```
-[Salida esperada: adpcm_2048-2-64.txt](https://github.com/aguirre-ivan/orgacomp-tps/blob/main/tp4/adpcm_4096-1-256.txt)
+Salida esperada: [adpcm_2048-2-64.txt](https://github.com/aguirre-ivan/orgacomp-tps/blob/main/tp4/adpcm_4096-1-256.txt)
