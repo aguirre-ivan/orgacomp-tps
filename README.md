@@ -10,3 +10,4 @@ Fuente: labs parte de los [Lab Assignments](http://csapp.cs.cmu.edu/3e/labs.html
 
 - [TP3](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/assembly): Assembly. Implementacion de cola
 - [TP4](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/tp4): Simulador de caché
+- [TP5](https://github.com/aguirre-ivan/orgacomp-tps/tree/main/tp5): Arquitectura
