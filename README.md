@@ -11,4 +11,4 @@ Repositorio de trabajos prácticos de la materia [Organización del computador (
 
 ***Fuente labs: parte de los [Lab Assignments](http://csapp.cs.cmu.edu/3e/labs.html) asociados al libro: Computer Systems: A Programmer’s Perspective.***
 
-*TP4 y TP5 realizados en conjunto con [Tomas Losada](https://github.com/tlosada100)*
+*TP4 y TP5 realizados en conjunto con [Tomas Losada](https://github.com/tlosada100).*
