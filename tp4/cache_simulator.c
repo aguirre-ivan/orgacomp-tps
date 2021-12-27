@@ -153,17 +153,15 @@ unsigned calcular_bits_sets(unsigned sets){
 	return bits_sets;
 }
 
-unsigned int calcular_tag(size_t bits_sets, size_t offset, unsigned int direccion_acceso){
-	unsigned int auxiliar = 0x80000000; /* todos 0's con 1 a la izquierda del todo */
-	auxiliar = auxiliar>>(31 - bits_sets - offset);
-	unsigned int tag = direccion_acceso>>(bits_sets + offset);
+unsigned int calculateTag(size_t setBits, size_t offset, unsigned int accessAddress){
+	unsigned int tag = accessAddress >> (setBits + offset);
 	return tag;
 }
 
-unsigned int calcular_set_index(size_t bits_sets, size_t offset, unsigned int direccion_acceso){
-	unsigned int mascara_index = (1<<(offset + bits_sets)) - 1;
-	unsigned int set_index = (direccion_acceso & mascara_index)>>offset;
-	return set_index;
+unsigned int calculateSetIndex(size_t setBits, size_t offset, unsigned int accessAddress){
+	unsigned int indexMask = (1 << (offset + setBits)) - 1;
+	unsigned int setIndex = (accessAddress & indexMask) >> offset;
+	return setIndex;
 }
 
 // returns line index avaliable to allocate
@@ -271,9 +269,9 @@ void processOperation(cache_simulator_t* cacheSimulator, char* commandOperation,
 
 	unsigned offset = calcular_offset(cacheSimulator->sizeBlock);
 	unsigned bits_sets = calcular_bits_sets(cacheSimulator->numberOfSets);
-	unsigned int setIndex = calcular_set_index(bits_sets, offset, direccion_acceso);
+	unsigned int setIndex = calculateSetIndex(bits_sets, offset, direccion_acceso);
 	
-	unsigned int tagIndex = calcular_tag(bits_sets, offset, direccion_acceso);
+	unsigned int tagIndex = calculateTag(bits_sets, offset, direccion_acceso);
 	access_type_t accessType = getAccessType(arreglo_linea_trazados[1]);
 
 	int coincidentLineIndex = getCoincidentLineTagIndex(cacheSimulator->sets[setIndex], tagIndex);
