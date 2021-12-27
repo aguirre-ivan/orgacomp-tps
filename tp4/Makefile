@@ -26,8 +26,6 @@ test:
 	./testing $(RESULT_FILE2) $(EXPECTED_FILE2)
 	rm -f testing
 
-run: build
-
 clean:
 	rm -f $(CACHESIM_OBJS) $(TESTING_OBJS) cachesim testing $(RESULT_FILE1) $(RESULT_FILE2)
 
