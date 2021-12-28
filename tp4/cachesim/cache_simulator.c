@@ -116,6 +116,7 @@ void printCaseIndicator(FILE* fileToPrintOn, case_indicator_t caseIndicator) {
 	else if (caseIndicator == DIRTY_CACHE_MISS) {
 		fprintf(fileToPrintOn, "2b");
 	}
+
 }
 
 // auxiliar of metrics info
@@ -135,32 +136,23 @@ void printFirstLineMetricsInfo(FILE* fileToPrintOn, cache_simulator_t* cacheSimu
 
 /*                          COMMAND PROCESS                            */
 
-unsigned calcular_offset(unsigned tam_bloques){
+unsigned calculateOffset(unsigned n){
 	unsigned offset = 0;
-	while (tam_bloques != 1){
+	while (n != 1){
 		offset += 1;
-		tam_bloques = tam_bloques>>1;
+		n >>= 1;
 	}
 	return offset;
 }
 
-unsigned calcular_bits_sets(unsigned sets){
-	unsigned bits_sets = 0;
-	while (sets != 1){
-		bits_sets += 1;
-		sets = sets>>1;
-	}
-	return bits_sets;
-}
-
-unsigned int calculateTag(size_t setBits, size_t offset, unsigned int accessAddress){
-	unsigned int tag = accessAddress >> (setBits + offset);
+unsigned int calculateTag(size_t numberOfSetsOffset, size_t blockOffsetOffset, unsigned int accessAddress) {
+	unsigned int tag = accessAddress >> (numberOfSetsOffset + blockOffsetOffset);
 	return tag;
 }
 
-unsigned int calculateSetIndex(size_t setBits, size_t offset, unsigned int accessAddress){
-	unsigned int indexMask = (1 << (offset + setBits)) - 1;
-	unsigned int setIndex = (accessAddress & indexMask) >> offset;
+unsigned int calculateSetIndex(size_t numberOfSetsOffset, size_t blockOffsetOffset, unsigned int accessAddress) {
+	unsigned int indexMask = (1 << (blockOffsetOffset + numberOfSetsOffset)) - 1;
+	unsigned int setIndex = (accessAddress & indexMask) >> blockOffsetOffset;
 	return setIndex;
 }
 
@@ -244,7 +236,7 @@ cache_simulator_t* createCacheSimulator(int sizeCache, unsigned int numberOfSets
 void processOperation(cache_simulator_t* cacheSimulator, char* commandOperation, bool verboseMode, FILE* fileToPrintOn) {
 	int accessTime = HIT_TIME;
 
-	// * verbose mode
+	//* verbose mode
 	case_indicator_t caseIndicator = CACHE_HIT;
 
 	int previousTagIndex = NULL_INDEX;
@@ -254,25 +246,24 @@ void processOperation(cache_simulator_t* cacheSimulator, char* commandOperation,
 
 	bool isDirtyMiss = false;
 	int lastUsedToPrint = NULL_INDEX;
-	//
+	// */
 
-	char *arreglo_linea_trazados[5]; /* Hardcodeado, pero en arreglo_linea_trazados[1] (R o W) y arreglo_linea_trazados[2] (la direccion del acceso) esta lo que importa */
-	char *token = strtok(commandOperation, " ");
-
+	char* commandOperationArray[5]; /* commandOperationArray[1] = (R or W) and commandOperationArray[2] = (access address) */
+	char* token = strtok(commandOperation, " ");
 	int i = 0;
 	while (token != NULL){
-		arreglo_linea_trazados[i++] = token;
+		commandOperationArray[i++] = token;
 		token = strtok(NULL, " ");
 	}
 
-	unsigned int direccion_acceso = strtoul(arreglo_linea_trazados[2], NULL, 0);
+	access_type_t accessType = getAccessType(commandOperationArray[1]);
+	unsigned int accessAddress = strtoul(commandOperationArray[2], NULL, 0);
 
-	unsigned offset = calcular_offset(cacheSimulator->sizeBlock);
-	unsigned bits_sets = calcular_bits_sets(cacheSimulator->numberOfSets);
-	unsigned int setIndex = calculateSetIndex(bits_sets, offset, direccion_acceso);
-	
-	unsigned int tagIndex = calculateTag(bits_sets, offset, direccion_acceso);
-	access_type_t accessType = getAccessType(arreglo_linea_trazados[1]);
+	unsigned blockOffsetOffset = calculateOffset(cacheSimulator->sizeBlock);
+	unsigned numberOfSetsOffset = calculateOffset(cacheSimulator->numberOfSets);
+
+	unsigned int setIndex = calculateSetIndex(numberOfSetsOffset, blockOffsetOffset, accessAddress);
+	unsigned int tagIndex = calculateTag(numberOfSetsOffset, blockOffsetOffset, accessAddress);
 
 	int coincidentLineIndex = getCoincidentLineTagIndex(cacheSimulator->sets[setIndex], tagIndex);
 	int lineIndexToPrint = coincidentLineIndex;
