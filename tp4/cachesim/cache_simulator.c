@@ -136,7 +136,7 @@ void printFirstLineMetricsInfo(FILE* fileToPrintOn, cache_simulator_t* cacheSimu
 
 /*                          COMMAND PROCESS                            */
 
-unsigned calculateOffset(unsigned n){
+unsigned calculateOffset(unsigned n) {
 	unsigned offset = 0;
 	while (n != 1){
 		offset += 1;
@@ -178,6 +178,19 @@ int getLineToDeallocate(set_t set) {
 access_type_t getAccessType(char* commandOperation) {
 	access_type_t type = strcmp(commandOperation, "R") == 0 ? READING : WRITTING;
 	return type;
+}
+
+void assignAccessTypeAndAccessAddress(char* commandOperation, access_type_t* accessType, unsigned int* accessAddress) {
+	char* commandOperationArray[5]; /* commandOperationArray[1] = (R or W) and commandOperationArray[2] = (access address) */
+	char* token = strtok(commandOperation, " ");
+	int i = 0;
+	while (token != NULL){
+		commandOperationArray[i++] = token;
+		token = strtok(NULL, " ");
+	}
+
+	*accessType = getAccessType(commandOperationArray[1]);
+	*accessAddress = strtoul(commandOperationArray[2], NULL, 0);
 }
 
 // returns line index if is tag hit, set.associavity if none
@@ -248,16 +261,9 @@ void processOperation(cache_simulator_t* cacheSimulator, char* commandOperation,
 	int lastUsedToPrint = NULL_INDEX;
 	// */
 
-	char* commandOperationArray[5]; /* commandOperationArray[1] = (R or W) and commandOperationArray[2] = (access address) */
-	char* token = strtok(commandOperation, " ");
-	int i = 0;
-	while (token != NULL){
-		commandOperationArray[i++] = token;
-		token = strtok(NULL, " ");
-	}
-
-	access_type_t accessType = getAccessType(commandOperationArray[1]);
-	unsigned int accessAddress = strtoul(commandOperationArray[2], NULL, 0);
+	access_type_t accessType;
+	unsigned int accessAddress;
+	assignAccessTypeAndAccessAddress(commandOperation, &accessType, &accessAddress);
 
 	unsigned blockOffsetOffset = calculateOffset(cacheSimulator->sizeBlock);
 	unsigned numberOfSetsOffset = calculateOffset(cacheSimulator->numberOfSets);
