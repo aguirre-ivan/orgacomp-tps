@@ -29,7 +29,7 @@ cola_crear:                /* Se recomienda usar calloc() */
 	ret
 
 cola_esta_vacia:           /* Se debe usar un conditional move (cmovXX/setXX) */
-	cmpq $0, (%rdi)
+	cmpq $0, OFFSET_HEAD(%rdi)
 	sete %al
 	ret
 
