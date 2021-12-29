@@ -25,12 +25,7 @@ nodo_crear:
 cola_crear:                /* Se recomienda usar calloc() */
 	movl $1, %edi
 	movl $SIZEOF_COLA, %esi
-	call calloc
-	cmpq $0, %rax
-	je .L12
-	movq $0, OFFSET_HEAD(%rax)
-	movq $0, OFFSET_TAIL(%rax)
-.L12:	
+	call calloc	
 	ret
 
 cola_esta_vacia:           /* Se debe usar un conditional move (cmovXX/setXX) */
